@@ -1,0 +1,24 @@
+body {
+  padding-top: 100px;
+}
+.twitter-typeahead {
+  width: 100%;
+}
+.tt-dropdown-menu {
+  margin-top: 10px;
+  padding-left: 16px;
+}
+.tt-cursor p {
+  cursor: pointer;
+  margin: -5px -5px 5px -5px;
+  padding: 5px;
+  background-color: #eee;
+}
+.tt-suggestion .name {
+  display: inline-block;
+  width: 300px;
+}
+.tt-suggestion .identifier {
+  font-size: 90%;
+  color: #999;
+}
