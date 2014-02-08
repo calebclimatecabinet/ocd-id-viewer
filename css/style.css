@@ -19,6 +19,8 @@ body {
   width: 300px;
 }
 .tt-suggestion .identifier {
-  font-size: 90%;
   color: #999;
+}
+#identifier {
+  margin-bottom: 50px;
 }

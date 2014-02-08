@@ -5,7 +5,7 @@ var engine = new Bloodhound({
   },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   prefetch: {
-    url: 'http://jsonpdataproxy.appspot.com/?format=json&max-results=10000&url=https://raw.github.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv',
+    url: 'http://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=10000&url=https://raw.github.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv',
     filter: function (data) {
       return $.map([data.fields].concat(data.data), function (row) {
         return {identifier: row[0], name: row[1]};
@@ -26,6 +26,10 @@ engine.initialize().done(function () {
     }
   });
 
+  $('#typeahead').bind('typeahead:opened', function (event, datum, name) {
+    $('#identifier').val('');
+  });
   $('#typeahead').bind('typeahead:selected', function (event, datum, name) {
+    $('#identifier').val(datum.identifier).focus().select();
   });
 });
