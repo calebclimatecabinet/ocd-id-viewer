@@ -1,5 +1,5 @@
 body {
-  padding-top: 100px;
+  padding-top: 25px;
 }
 .twitter-typeahead {
   width: 100%;
@@ -21,6 +21,6 @@ body {
 .tt-suggestion .identifier {
   color: #999;
 }
-#identifier {
-  margin-bottom: 50px;
+#instructions {
+  margin-top: 325px;
 }
