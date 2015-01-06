@@ -6,41 +6,57 @@ var tokenizer = function (s) {
   }).split(/[\s\/-]+/);
 }
 
-// @see https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
-var engine = new Bloodhound({
-  limit: 10,
-  datumTokenizer: function (datum) {
-    return tokenizer(datum.name);
-  },
-  queryTokenizer: tokenizer,
-  prefetch: {
-    url: 'http://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=10000&url=https://raw.github.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv',
-    filter: function (data) {
-      return $.map([data.fields].concat(data.data), function (row) {
-        return {identifier: row[0], name: row[1]};
+function start() {
+  var url = $('#url').val();
+
+  if (url) {
+    $('#loading').css('visibility', 'visible').html('<img src="img/ajax-loader.gif" width="16" height="16" alt=""> Loading OCD-IDs…');
+
+    $('#typeahead').typeahead('destroy');
+
+    // @see https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
+    var engine = new Bloodhound({
+      limit: 10,
+      datumTokenizer: function (datum) {
+        return tokenizer(datum.name);
+      },
+      queryTokenizer: tokenizer,
+      prefetch: {
+        url: 'http://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=40000&url=' + url,
+        filter: function (data) {
+          return $.map($.grep(data.data, function (row) {
+            return url != 'https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv' || !/\/place:/.test(row[0]);
+          }), function (row) {
+            return {id: row[0], name: row[1]};
+          });
+        }
+      }
+    });
+
+    engine.initialize().done(function () {
+      $('#loading').css('visibility', 'hidden');
+
+      $('#typeahead').typeahead({
+        autoselect: true,
+        highlight: true
+      }, {
+        displayKey: 'name',
+        source: engine.ttAdapter(),
+        templates: {
+          suggestion: Handlebars.compile('<p><span class="name">{{name}}</span><span class="id">{{id}}</span></p>')
+        }
       });
-    }
+
+      $('#typeahead').bind('typeahead:opened', function (event, datum, name) {
+        $('#identifier').val('');
+      });
+      $('#typeahead').bind('typeahead:selected', function (event, datum, name) {
+        $('#identifier').val(datum.id).focus().select();
+      });
+    });
   }
-});
+}
 
-engine.initialize().done(function () {
-  $('#loading').css('visibility', 'hidden');
+$('#url').change(start);
 
-  $('#typeahead').typeahead({
-    autoselect: true,
-    highlight: true
-  }, {
-    displayKey: 'name',
-    source: engine.ttAdapter(),
-    templates: {
-      suggestion: Handlebars.compile('<p><span class="name">{{name}}</span><span class="identifier">{{identifier}}</span></p>')
-    }
-  });
-
-  $('#typeahead').bind('typeahead:opened', function (event, datum, name) {
-    $('#identifier').val('');
-  });
-  $('#typeahead').bind('typeahead:selected', function (event, datum, name) {
-    $('#identifier').val(datum.identifier).focus().select();
-  });
-});
+start();

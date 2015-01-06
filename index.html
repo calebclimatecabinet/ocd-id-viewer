@@ -6,19 +6,30 @@
   <title>Open Civic Data Division Identifier Viewer</title>
   <meta name="description" content="Easily search Open Civic Data Division IDs">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="container">
-  <p class="lead" id="loading"><img src="img/ajax-loader.gif" width="16" height="16" alt=""> Loading OCD-IDs…</p>
+  <select class="form-control" id="url">
+    <option></option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-au.csv">Australia</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv">Canada (except places)</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-cl.csv">Chile</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-de.csv">Germany</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-fi.csv">Finland</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-in.csv">India</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-ua.csv">Ukraine</option>
+    <option value="https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-us.csv" disabled>United States (too large)</option>
+  </select>
+  <p class="lead" id="loading"> </p>
   <input id="typeahead" class="form-control input-lg" type="text" placeholder="Type a name of a place">
   <p class="lead" id="instructions">Copy the OCD-ID of the place you selected:</p>
   <input id="identifier" class="form-control input-lg" type="text" placeholder="">
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="js/vendor/typeahead.bundle.js"></script>
 <script src="js/vendor/handlebars-v1.3.0.js"></script>
 <script src="js/vendor/ZeroClipboard.min.js"></script>

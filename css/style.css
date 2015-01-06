@@ -16,9 +16,9 @@ body {
 }
 .tt-suggestion .name {
   display: inline-block;
-  width: 300px;
+  width: 700px;
 }
-.tt-suggestion .identifier {
+.tt-suggestion .id {
   color: #999;
 }
 #instructions {
