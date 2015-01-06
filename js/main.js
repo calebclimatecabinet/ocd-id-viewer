@@ -25,6 +25,7 @@ function start() {
         url: 'http://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=40000&url=' + url,
         filter: function (data) {
           return $.map($.grep(data.data, function (row) {
+            // Including "place" type IDs in Canada exceeds persistent storage maximum size.
             return url != 'https://raw.githubusercontent.com/opencivicdata/ocd-division-ids/master/identifiers/country-ca.csv' || !/\/place:/.test(row[0]);
           }), function (row) {
             return {id: row[0], name: row[1]};
