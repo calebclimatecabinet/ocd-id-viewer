@@ -22,7 +22,7 @@ function start() {
       },
       queryTokenizer: tokenizer,
       prefetch: {
-        url: 'http://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=40000&url=' + url,
+        url: 'https://jsonpdataproxy.appspot.com/?format=json&encoding=utf-8&max-results=40000&url=' + url,
         filter: function (data) {
           return $.map($.grep(data.data, function (row) {
             // Including "place" type IDs in Canada exceeds persistent storage maximum size.
